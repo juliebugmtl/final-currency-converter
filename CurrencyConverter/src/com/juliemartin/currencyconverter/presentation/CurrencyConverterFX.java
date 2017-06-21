@@ -124,9 +124,9 @@ public class CurrencyConverterFX {
         layout.add(hboxBtn, 0, 4, 2, 1);
         
         // Connect the buttons to their event handler
-        // buy.setOnAction(this::buyAction);
-        // sell.setOnAction(this::buyAction);
-        // exit.setOnAction(this::exitAction);
+//        buy.setOnAction(this::buyAction);
+//        sell.setOnAction(this::buyAction);
+//        exit.setOnAction(this::exitAction);
         
         // Set the column widths as a percentage
         ColumnConstraints col1 = new ColumnConstraints();
@@ -137,6 +137,7 @@ public class CurrencyConverterFX {
 
         // Add space around the outside of the GridPane
         layout.setPadding(new Insets(0, 40, 0, 40));
+        
         // Add space between rows and columns of the GridPane
         layout.setHgap(10.0);
         layout.setVgap(10.0);
@@ -161,39 +162,39 @@ public class CurrencyConverterFX {
         alert.showAndWait();
     }
         
-   private void calculateButtonHandler(ActionEvent e) {
-        boolean doCalculation = true;
-        try {
-            record.setInputValue(new BigDecimal(amountValue.getText()));
-        } catch (NumberFormatException nfe) {
-            doCalculation = false;
-            numberFormatAlert(amountValue.getText(), "Loan");
-        }
-        try {
-            record.setRate(new BigDecimal(rateValue.getText()));
-        } catch (NumberFormatException nfe) {
-            doCalculation = false;
-            numberFormatAlert(rateValue.getText(), "Rate");
-        }
-        try {
-            record.setTerm(new BigDecimal(termValue.getText()));
-        } catch (NumberFormatException nfe) {
-            doCalculation = false;
-            numberFormatAlert(termValue.getText(), "Term");
-        }
-
-        if (doCalculation == true) {
-            switch (calculationType) {
-                case 0:
-                    money.buyCalculation(record);
-                    break;
-                case 1:
-                    money.sellValueCalculation(record);
-                    break;
-                }
-            result.setText(record.getResult().toString());
-        }
-    }
+//   private void calculateButtonHandler(ActionEvent e) {
+//        boolean doCalculation = true;
+//        try {
+//            record.setInputValue(new BigDecimal(amountValue.getText()));
+//        } catch (NumberFormatException nfe) {
+//            doCalculation = false;
+//            numberFormatAlert(amountValue.getText(), "Loan");
+//        }
+//        try {
+//            record.setRate(new BigDecimal(rateValue.getText()));
+//        } catch (NumberFormatException nfe) {
+//            doCalculation = false;
+//            numberFormatAlert(rateValue.getText(), "Rate");
+//        }
+//        try {
+//            record.setTerm(new BigDecimal(termValue.getText()));
+//        } catch (NumberFormatException nfe) {
+//            doCalculation = false;
+//            numberFormatAlert(termValue.getText(), "Term");
+//        }
+//
+//        if (doCalculation == true) {
+//            switch (calculationType) {
+//                case 0:
+//                    money.buyCalculation(record);
+//                    break;
+//                case 1:
+//                    money.sellValueCalculation(record);
+//                    break;
+//                }
+//            result.setText(record.getResult().toString());
+//        }
+//    }
 
 
     public void start(Stage primaryStage) {

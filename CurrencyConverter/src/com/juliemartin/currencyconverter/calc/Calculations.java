@@ -1,6 +1,7 @@
 package com.juliemartin.currencyconverter.calc;
 
 import com.juliemartin.currencyconverter.data.MoneyBean;
+import com.juliemartin.currencyconverter.data.RecordBean;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -21,38 +22,12 @@ public class Calculations {
 
         // Value is cost in Canadian dollars
         
+        double temp1 = money.getAmount();
+        double temp2 = record.getBuyPerCAD();
+        double temp3 = temp2*temp1;
         
-        
-        
-        
-
-        // At each step this variable is updated
-        BigDecimal temp;
-        // (1+rate)
-        temp = BigDecimal.ONE.add(monthlyRate);
-
-        // (1+rate)^term
-        temp = temp.pow(money.getTerm().intValueExact());
-
-        // BigDecimal pow does not support negative exponents so divide 1 by the result
-        temp = BigDecimal.ONE.divide(temp, MathContext.DECIMAL64);
-
-        // 1 - (1+rate)^-term
-        temp = BigDecimal.ONE.subtract(temp);
-
-        // rate / (1 - (1+rate)^-term)
-        temp = monthlyRate.divide(temp, MathContext.DECIMAL64);
-
-        // pv * (rate / 1 - (1+rate)^-term)
-        temp = money.getInputValue().multiply(temp);
-
-        // Round to 2 decimal places using banker's rounding
-        temp = temp.setScale(2, RoundingMode.HALF_EVEN);
-
-        // Remove the sign if the result is negative
-        money.setResult(temp.abs());
+        money.setValue(temp3);
     }
-
     /**
      * Selling foreign currency for Canadian dollars
      *
@@ -60,32 +35,14 @@ public class Calculations {
      * @throws ArithmeticException
      */
     public void sellPerCAD(MoneyBean money) throws ArithmeticException {
-        // Divide APR by 12
-        BigDecimal monthlyRate = money.getRate().divide(new BigDecimal("12"), MathContext.DECIMAL64);
-
-        // At each step this variable is updated
-        BigDecimal temp;
-        // (1+rate)
-        temp = BigDecimal.ONE.add(monthlyRate);
-
-        // (1+rate)^term
-        temp = temp.pow(money.getTerm().intValueExact());
-
-        // 1 - (1+rate)^-term
-        temp = BigDecimal.ONE.subtract(temp);
-
-        // (1 - (1+rate)^-term) / rate
-        temp = temp.divide(monthlyRate, MathContext.DECIMAL64);
-
-        // pv * (rate / 1 - (1+rate)^-term)
-        temp = money.getInputValue().multiply(temp);
-
-        // Round to 2 decimal places using banker's rounding
-        temp = temp.setScale(2, RoundingMode.HALF_EVEN);
-
-        // Remove the sign if the result is negative
-        money.setResult(temp.abs());
-
+        
+        // Value is money back in Canadian dollars
+        
+        double temp1 = money.getAmount();
+        double temp2 = record.getSellPerCAD();
+        double temp3 = temp2*temp1;
+        
+        money.setValue(temp3);
     }
-
+        
 }
