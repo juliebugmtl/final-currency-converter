@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Julie
+ * @author Julie Martin
  */
 public class CurrencyConverterMain extends Application {
 

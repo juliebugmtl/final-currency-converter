@@ -2,7 +2,7 @@ package com.juliemartin.currencyconverter.data;
 
 /**
  *
- * @author Julie
+ * @author Julie Martin
  */
 public class MoneyBean {
 

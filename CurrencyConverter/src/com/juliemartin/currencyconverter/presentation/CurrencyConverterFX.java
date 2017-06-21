@@ -2,7 +2,6 @@ package com.juliemartin.currencyconverter.presentation;
 
 import com.juliemartin.currencyconverter.data.MoneyBean;
 import com.juliemartin.currencyconverter.data.RecordBean;
-import java.math.BigDecimal;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

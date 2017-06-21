@@ -18,7 +18,7 @@ public class Calculations {
      * @param money
      * @throws ArithmeticException
      */
-    public void buyPerCAD(MoneyBean money) throws ArithmeticException {
+    public void buyPerCAD(MoneyBean money, RecordBean record) throws ArithmeticException {
 
         // Value is cost in Canadian dollars
         
@@ -34,7 +34,7 @@ public class Calculations {
      * @param money
      * @throws ArithmeticException
      */
-    public void sellPerCAD(MoneyBean money) throws ArithmeticException {
+    public void sellPerCAD(MoneyBean money, RecordBean record) throws ArithmeticException {
         
         // Value is money back in Canadian dollars
         
