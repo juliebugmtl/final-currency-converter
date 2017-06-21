@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Julie
+ * @author Julie Martin
  */
 public class CurrencyConverterMain extends Application {
 
@@ -21,6 +21,7 @@ public class CurrencyConverterMain extends Application {
     @Override
     public void init() {
         calc = new Calculations();
+        money = new MoneyBean();
         record = new RecordBean();
         gui = new CurrencyConverterFX(money, record);
     }

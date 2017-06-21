@@ -1,14 +1,45 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.juliemartin.currencyconverter.data;
 
 /**
  *
- * @author Julie
+ * @author Julie Martin
  */
 public class MoneyBean {
+
+    private String currency;
+    private double amount;
+    private double value;
+    
+    // Constructor
+    
+    public MoneyBean() {
+
+    }
+
+    // Getters and Setters
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
     
 }
