@@ -40,48 +40,49 @@ public class CurrencyConverterFX {
         calculationType = 1; // Sell
     }
   
-        // Create Layout Method
-        public GridPane createLayout() {
-        GridPane layout = new GridPane();
+    // Create Layout Method
+    private BorderPane buildPage() {
+        BorderPane converterPane = new BorderPane();
+
+        // Create an empty GridPane
+        GridPane converterGrid = new GridPane();
         
         // Column 0, Row 0
         Label title = new Label("Currency Converter");
-        
         title.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family:Verdana, sans serif");
         
         // HBox will span 2 columns
-        
         HBox hbox = new HBox();
         hbox.getChildren().addAll(title);
         hbox.setAlignment(Pos.CENTER);
         hbox.setPadding(new Insets(20.0));
-        layout.add(hbox, 0, 0, 2, 1);
+        converterGrid.add(hbox, 0, 0, 2, 1);
         
         // Column 0, Row 1
         Label currencyCodeLabel = new Label("Currency Code: ");
         currencyCodeLabel.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family: Verdana, sans serif");
-        layout.add(currencyCodeLabel, 0, 1);
+        converterGrid.add(currencyCodeLabel, 0, 1);
         
         currencyCode = new TextField();
         currencyCode.setStyle("-fx-font-size:14pt; -fx-font-weight:normal; -fx-font-family:Verdana, sans-serif");
         currencyCode.setAlignment(Pos.CENTER_RIGHT);
-        layout.add(currencyCode, 1, 1);
+        converterGrid.add(currencyCode, 1, 1);
         
         // Column 0, Row 2
         Label currencyAmountLabel = new Label("Amount: ");
         currencyAmountLabel.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family: Verdana, sans-serif");
-        layout.add(currencyAmountLabel, 0, 2);
+        converterGrid.add(currencyAmountLabel, 0, 2);
         
         // Column 1, Row 2
         currencyAmount = new TextField();
         currencyAmount.setStyle("-fx-font-size:14pt; -fx-font-weight:normal; -fx-font-family:Verdana, sans-serif");
         currencyAmount.setAlignment(Pos.CENTER_RIGHT);
-        layout.add(currencyAmount, 1, 2);
+        converterGrid.add(currencyAmount, 1, 2);
         
         // Column 0, Row 3
         Label valueLabel = new Label("Value: ");
         valueLabel.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family:Verdana, sans-serif");
-        layout.add(valueLabel, 0, 3);
+        converterGrid.add(valueLabel, 0, 3);
         
         // Column 1, Row 3
         value = new TextField();
@@ -90,7 +91,7 @@ public class CurrencyConverterFX {
         
         // Make sure you can't edit the result field
         value.setEditable(false);
-        layout.add(value, 1, 3);
+        converterGrid.add(value, 1, 3);
         
         // Convert Button
         Button buy = new Button("Buy");
@@ -120,7 +121,7 @@ public class CurrencyConverterFX {
         hboxBtn.setSpacing(10.0); // Spacing around the controls in the HBox
 
         // Place the HBOX in column 0, row 4, spanning 2 columns and 1 row
-        layout.add(hboxBtn, 0, 4, 2, 1);
+        converterGrid.add(hboxBtn, 0, 4, 2, 1);
         
         // Connect the buttons to their event handler
 //        buy.setOnAction(this::buyAction);
@@ -132,16 +133,16 @@ public class CurrencyConverterFX {
         col1.setPercentWidth(30.0);
         ColumnConstraints col2 = new ColumnConstraints();
         col2.setPercentWidth(70.0);
-        layout.getColumnConstraints().addAll(col1, col2);
+        converterGrid.getColumnConstraints().addAll(col1, col2);
 
         // Add space around the outside of the GridPane
-        layout.setPadding(new Insets(0, 40, 0, 40));
+        converterGrid.setPadding(new Insets(0, 40, 0, 40));
         
         // Add space between rows and columns of the GridPane
-        layout.setHgap(10.0);
-        layout.setVgap(10.0);
+        converterGrid.setHgap(10.0);
+        converterGrid.setVgap(10.0);
         
-        return layout;
+        return converterPane;
     }
         
   
@@ -152,14 +153,14 @@ public class CurrencyConverterFX {
      * @param badValue
      * @param textField
      */
-    private void numberFormatAlert(String badValue, String textField) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Number Format Error");
-        alert.setHeaderText("The value \"" + badValue + "\" cannot be converted to a number for the " + textField);
-        alert.setContentText("Number Format Error");
-
-        alert.showAndWait();
-    }
+//    private void numberFormatAlert(String badValue, String textField) {
+//        Alert alert = new Alert(Alert.AlertType.ERROR);
+//        alert.setTitle("Number Format Error");
+//        alert.setHeaderText("The value \"" + badValue + "\" cannot be converted to a number for the " + textField);
+//        alert.setContentText("Number Format Error");
+//
+//        alert.showAndWait();
+//    }
         
 //   private void calculateButtonHandler(ActionEvent e) {
 //        boolean doCalculation = true;
@@ -199,9 +200,10 @@ public class CurrencyConverterFX {
     public void start(Stage primaryStage) {
 
         BorderPane root = new BorderPane();
+        
         Scene scene = new Scene(root, 600, 450);
 
-        primaryStage.setTitle("Calculations");
+        primaryStage.setTitle("Currency Converter");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
