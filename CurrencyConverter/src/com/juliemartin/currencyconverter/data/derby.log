@@ -78,3 +78,5 @@ ERROR XJ004: Database 'AQUARIUM' not found.
 ============= end nested exception, level (1) ===========
 Cleanup action completed
 Wed Jun 21 00:34:16 EDT 2017 Thread[DRDAConnThread_3,5,main] (DATABASE = AQUARIUM), (DRDAID = {4}), Database 'AQUARIUM' not found.
+----------------------------------------------------------------
+Wed Jun 21 03:07:52 EDT 2017: Shutting down Derby engine
