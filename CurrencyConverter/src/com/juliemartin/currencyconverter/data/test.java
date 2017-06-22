@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Properties;
  
 /**
@@ -20,6 +22,40 @@ public class test {
     String user = "banker";
     String password = "finance";
  
+        public ArrayList<CurrencyData> getQueryRecords() {
+
+        ArrayList<CurrencyData> rows = new ArrayList<>();
+        String sql = "Select * from MONEY";
+        try (
+                Connection connection = DriverManager.getConnection(url, user, password);
+                PreparedStatement pStatement = connection.prepareStatement(sql);
+                ResultSet resultSet = pStatement.executeQuery();) {
+            while (resultSet.next()) {
+                rows.add(new CurrencyData(
+                        resultSet.getString("CURRENCYCODE"),
+                        resultSet.getDouble("BUYPERCAD"),
+                        resultSet.getDouble("SELLPERCAD")));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.exit(1);
+        }
+        
+        
+        
+        System.out.println(rows);
+        return rows;
+
+        
+    }
+        
+        
+
+        
+
+    
+        
+        
     private void testDatabase() {
         
     String query = "SELECT * FROM MONEY";
@@ -53,13 +89,9 @@ public class test {
     
        public void perform() {
         
-        testDatabase();
-        //testCheckingWithdraw();
-        //testCheckingOverdrawn();
-        //testLotsOfChecking();
-        //testSavingsDeposit();
-        //testSavingsWithdrawInactive();
-        //testSavingsWithdraw();
+          getQueryRecords();
+        //testDatabase();
+        
              
     }
     

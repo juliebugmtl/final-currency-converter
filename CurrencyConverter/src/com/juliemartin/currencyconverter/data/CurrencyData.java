@@ -13,41 +13,51 @@ import java.util.ArrayList;
  */
 class CurrencyData {
 
-    String url = "jdbc:derby://localhost:1527/MONEYRECORDS";
-    String user = "banker";
-    String password = "finance";
+ private String CURRENCYCODE;
+    private double SELLPERCAD;
+    private double BUYPERCAD;
     
-    public CurrencyData(int aInt, String string, String string1, String string2) {
+    public CurrencyData(String CURRENCYCODE, double SELLPERCAD, double BUYPERCAD) {
         super();
+        this.CURRENCYCODE = CURRENCYCODE;
+        this.SELLPERCAD = SELLPERCAD;
+        this.BUYPERCAD = BUYPERCAD;
     }
 
-    /**
-     * Retrieve all the records for a given table Return the data as an
-     * array list of CurrencyData objects
-     *
-     * @param sql The SQL statement to execute
-     * @return The array list
-     */
 
-    public ArrayList<CurrencyData> getQueryRecords() {
+    public String getCurrencyCode() {
+        return CURRENCYCODE;
+    }
 
-        ArrayList<CurrencyData> rows = new ArrayList<>();
-        String sql = "Select * from MONEY";
-        try (
-                Connection connection = DriverManager.getConnection(url, user, password);
-                PreparedStatement pStatement = connection.prepareStatement(sql);
-                ResultSet resultSet = pStatement.executeQuery();) {
-            while (resultSet.next()) {
-                rows.add(new CurrencyData(
-                        resultSet.getInt("ID"),
-                        resultSet.getString("CURRENCYCODE"),
-                        resultSet.getString("BUYPERCAD"),
-                        resultSet.getString("SELLPERCAD")));
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            System.exit(1);
-        }
-        return rows;
+    public void setCurrencyCode(String CURRENCYCODE) {
+        this.CURRENCYCODE = CURRENCYCODE;
+    }
+
+    public double SELLPERCAD() {
+        return SELLPERCAD;
+    }
+
+    public void setSellPerCAD(double SELLPERCAD) {
+        this.SELLPERCAD = SELLPERCAD;
+    }
+
+    public double BUYPERCAD() {
+        return BUYPERCAD;
+    }
+
+    public void setBuyPerCAD(double BUYPERCAD) {
+        this.BUYPERCAD = BUYPERCAD;
+    }
+
+    
+
+    @Override
+    public String toString() {
+        String s =
+        "Currency Code = " + CURRENCYCODE + "\n" +
+        "Sell per CAD = " + SELLPERCAD + "\n" +
+        "Buy per CAD = " + BUYPERCAD + "\n";
+
+        return s;
     }
 }
