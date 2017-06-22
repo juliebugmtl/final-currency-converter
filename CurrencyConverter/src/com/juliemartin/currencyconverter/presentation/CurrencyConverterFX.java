@@ -4,8 +4,10 @@ import com.juliemartin.currencyconverter.calc.Calculations;
 import com.juliemartin.currencyconverter.data.MoneyBean;
 import com.juliemartin.currencyconverter.data.RecordBean;
 import java.math.BigDecimal;
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -136,6 +138,13 @@ public class CurrencyConverterFX {
         // Exit button
         Button exit = new Button("Exit");
         exit.setStyle("-fx-font-size:14pt; -fx-font-weight:bold;  -fx-font-family:Verdana, sans-serif");
+        exit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                Platform.exit();
+            }
+        }
+        );
+
         
         // HBox that will span 2 columns so that buttons can be centered 
         HBox hboxBtn = new HBox();
@@ -175,68 +184,10 @@ public class CurrencyConverterFX {
         return converterPane;
     }
 
-    /**
-     * This is the event handler when the button is being pressed. If there is a
-     * NumberFormatException when any of the fields is converted to a BigDecimal
-     * then an Alert box is displayed
-     *
-     * There is a better way to handle strings that cannot convert and you will
-     * learn how in the Java Desktop course.
-     *
-     * @param e
-     */
-//    private void calculateButtonHandler(ActionEvent e) {
-//        boolean doCalculation = true;
-//        try {
-//            finance.setInputValue(new BigDecimal(currencyCode.getText()));
-//        } catch (NumberFormatException nfe) {
-//            doCalculation = false;
-//            numberFormatAlert(currencyCode.getText(), "Loan");
-//        }
-//        try {
-//            finance.setRate(new BigDecimal(valueLabel.getText()));
-//        } catch (NumberFormatException nfe) {
-//            doCalculation = false;
-//            numberFormatAlert(valueLabel.getText(), "Rate");
-//        }
-//        try {
-//            finance.setTerm(new BigDecimal(termValue.getText()));
-//        } catch (NumberFormatException nfe) {
-//            doCalculation = false;
-//            numberFormatAlert(termValue.getText(), "Term");
-//        }
-//
-//        if (doCalculation == true) {
-//            switch (calculationType) {
-//                case 0:
-//                    calc.loanCalculation(finance);
-//                    break;
-//                case 1:
-//                    calc.futureValueCalculation(finance);
-//                    break;
-//                case 2:
-//                    calc.savingsGoalCalculation(finance);
-//                    break;
-//            }
-//            resultValue.setText(finance.getResult().toString());
-//        }
-//    }
 
-    /**
-     * Display an Alert box if there is a NumberFormatException detected in the
-     * calculateButtonHandler
-     *
-     * @param badValue
-     * @param textField
-     */
-    private void numberFormatAlert(String badValue, String textField) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Number Format Error");
-        alert.setHeaderText("The value \"" + badValue + "\" cannot be converted to a number for the " + textField);
-        alert.setContentText("Number Format Error");
 
-        alert.showAndWait();
-    }
+
+
 
     public void start(Stage primaryStage) {
 

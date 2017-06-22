@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 class CurrencyData {
 
-    String url = "jdbc:derby://localhost:1527/MONEY";
+    String url = "jdbc:derby://localhost:1527/MONEYRECORDS";
     String user = "banker";
     String password = "finance";
     
@@ -32,7 +32,7 @@ class CurrencyData {
     public ArrayList<CurrencyData> getQueryRecords() {
 
         ArrayList<CurrencyData> rows = new ArrayList<>();
-        String sql = "Select * from CONVERTER";
+        String sql = "Select * from MONEY";
         try (
                 Connection connection = DriverManager.getConnection(url, user, password);
                 PreparedStatement pStatement = connection.prepareStatement(sql);
