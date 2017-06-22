@@ -1,5 +1,6 @@
 package com.juliemartin.currencyconverter.presentation;
 
+import com.juliemartin.currencyconverter.calc.Calculations;
 import com.juliemartin.currencyconverter.data.MoneyBean;
 import com.juliemartin.currencyconverter.data.RecordBean;
 import javafx.event.ActionEvent;
@@ -24,26 +25,54 @@ public class CurrencyConverterFX {
     
     private final MoneyBean money;
     private final RecordBean record;
+    private final Calculations calc;
 
     private TextField currencyCode;
     private TextField currencyAmount;
     private TextField value;
-//    private Label amountLabel;
-//    private Label title;
+    private Label amountLabel;
+    private Label title;
 
     private int calculationType;
 
-    public CurrencyConverterFX(MoneyBean money, RecordBean record) {
+    public CurrencyConverterFX(MoneyBean money, RecordBean record, Calculations calc) {
+        this.calc = calc;
         this.money = money;
         this.record = record;
         calculationType = 0; // Buy
         calculationType = 1; // Sell
     }
   
+        /**
+     * This method creates a Label that is centered inside an HBox.
+     *
+     * @param text
+     * @return
+     */
+    private HBox createTitle() {
+        title = new Label("Currency Converter"); // default
+
+        // Style the label using CSS
+        // Possible fonts can be found at http://www.webdesigndev.com/16-gorgeous-web-safe-fonts-to-use-with-css/
+        title.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family:Verdana, sans serif");
+
+        // To center the title and give it padding create an HBox, set the
+        // padding and alignment, add the label and then add the HBox to the BorderPane.
+        HBox hbox = new HBox();
+        hbox.getChildren().add(title);
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setPadding(new Insets(20, 20, 20, 20));
+
+        return hbox;
+    }
+    
     // Create Layout Method
     private BorderPane buildPage() {
         BorderPane converterPane = new BorderPane();
 
+        // Add a Title
+        converterPane.setTop(createTitle());
+        
         // Create an empty GridPane
         GridPane converterGrid = new GridPane();
         
@@ -60,7 +89,7 @@ public class CurrencyConverterFX {
         
         // Column 0, Row 1
         Label currencyCodeLabel = new Label("Currency Code: ");
-        currencyCodeLabel.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family: Verdana, sans serif");
+        currencyCodeLabel.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family: Verdana, sans serif;");
         converterGrid.add(currencyCodeLabel, 0, 1);
         
         currencyCode = new TextField();
@@ -200,6 +229,7 @@ public class CurrencyConverterFX {
     public void start(Stage primaryStage) {
 
         BorderPane root = new BorderPane();
+        root.setCenter(buildPage());
         
         Scene scene = new Scene(root, 600, 450);
 
