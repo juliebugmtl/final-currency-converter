@@ -3,6 +3,8 @@ package com.juliemartin.currencyconverter.presentation;
 import com.juliemartin.currencyconverter.calc.Calculations;
 import com.juliemartin.currencyconverter.data.MoneyBean;
 import com.juliemartin.currencyconverter.data.RecordBean;
+import java.math.BigDecimal;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,7 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -43,7 +48,7 @@ public class CurrencyConverterFX {
         calculationType = 1; // Sell
     }
   
-        /**
+ /**
      * This method creates a Label that is centered inside an HBox.
      *
      * @param text
@@ -54,7 +59,7 @@ public class CurrencyConverterFX {
 
         // Style the label using CSS
         // Possible fonts can be found at http://www.webdesigndev.com/16-gorgeous-web-safe-fonts-to-use-with-css/
-        title.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family:Verdana, sans serif");
+        title.setStyle("-fx-font-size:18pt; -fx-font-weight:bold; -fx-font-family:Verdana, sans-serif");
 
         // To center the title and give it padding create an HBox, set the
         // padding and alignment, add the label and then add the HBox to the BorderPane.
@@ -65,62 +70,60 @@ public class CurrencyConverterFX {
 
         return hbox;
     }
-    
-    // Create Layout Method
-    private BorderPane buildPage() {
+
+    /**
+     * This method creates a BorderPane that has a title in the top and a
+     * GridPane in the center. The GridPane contains a form.
+     *
+     * @return The BorderPane to add to the Scene
+     */
+    private BorderPane buildForm() {
+
+        // Create the pane that will hold the controls
         BorderPane converterPane = new BorderPane();
 
         // Add a Title
         converterPane.setTop(createTitle());
-        
-        // Create an empty GridPane
+
+        // Craete an empty GridPane
         GridPane converterGrid = new GridPane();
-        
-        // Column 0, Row 0
-        Label title = new Label("Currency Converter");
-        title.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family:Verdana, sans serif");
-        
-        // HBox will span 2 columns
-        HBox hbox = new HBox();
-        hbox.getChildren().addAll(title);
-        hbox.setAlignment(Pos.CENTER);
-        hbox.setPadding(new Insets(20.0));
-        converterGrid.add(hbox, 0, 0, 2, 1);
-        
-        // Column 0, Row 1
-        Label currencyCodeLabel = new Label("Currency Code: ");
-        currencyCodeLabel.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family: Verdana, sans serif;");
-        converterGrid.add(currencyCodeLabel, 0, 1);
-        
+
+        // Column 0, Row 0 Currency Code
+        Label currencyCodeLabel = new Label("Currency Code");
+        currencyCodeLabel.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family:Verdana, sans-serif");
+        converterGrid.add(currencyCodeLabel, 0, 0);
+
+        // Column 1, Row 0 Empty field for currency code
         currencyCode = new TextField();
+        currencyCode.setMaxWidth(75);
         currencyCode.setStyle("-fx-font-size:14pt; -fx-font-weight:normal; -fx-font-family:Verdana, sans-serif");
-        currencyCode.setAlignment(Pos.CENTER_RIGHT);
-        converterGrid.add(currencyCode, 1, 1);
-        
-        // Column 0, Row 2
-        Label currencyAmountLabel = new Label("Amount: ");
-        currencyAmountLabel.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family: Verdana, sans-serif");
-        converterGrid.add(currencyAmountLabel, 0, 2);
-        
-        // Column 1, Row 2
+        currencyCode.setAlignment(Pos.CENTER_LEFT);
+        converterGrid.add(currencyCode, 1, 0);
+
+        // Column 0, Row 1 Amount
+        Label amountLabel = new Label("Amount");
+        amountLabel.setAlignment(Pos.CENTER_RIGHT);
+        amountLabel.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family:Verdana, sans-serif");
+        converterGrid.add(amountLabel, 0, 1);
+
+        // Column 1, Row 1 Empty field for amount
         currencyAmount = new TextField();
         currencyAmount.setStyle("-fx-font-size:14pt; -fx-font-weight:normal; -fx-font-family:Verdana, sans-serif");
-        currencyAmount.setAlignment(Pos.CENTER_RIGHT);
-        converterGrid.add(currencyAmount, 1, 2);
-        
-        // Column 0, Row 3
-        Label valueLabel = new Label("Value: ");
+        currencyAmount.setAlignment(Pos.CENTER_LEFT);
+        converterGrid.add(currencyAmount, 1, 1);
+
+        // Column 0, Row 2 Value
+        Label valueLabel = new Label("Value");
+        valueLabel.setAlignment(Pos.CENTER_RIGHT);
         valueLabel.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family:Verdana, sans-serif");
-        converterGrid.add(valueLabel, 0, 3);
-        
-        // Column 1, Row 3
+        converterGrid.add(valueLabel, 0, 2);
+
+        // Column 1, Row 2 Empty field for value and set not editable
         value = new TextField();
-        value.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family: Verdana, sans-serif");
-        value.setAlignment(Pos.CENTER_RIGHT);
-        
-        // Make sure you can't edit the result field
+        value.setStyle("-fx-font-size:14pt; -fx-font-weight:normal; -fx-font-family:Verdana, sans-serif");
+        value.setAlignment(Pos.CENTER_LEFT);
         value.setEditable(false);
-        converterGrid.add(value, 1, 3);
+        converterGrid.add(value, 1, 2);
         
         // Convert Button
         Button buy = new Button("Buy");
@@ -151,62 +154,53 @@ public class CurrencyConverterFX {
 
         // Place the HBOX in column 0, row 4, spanning 2 columns and 1 row
         converterGrid.add(hboxBtn, 0, 4, 2, 1);
-        
-        // Connect the buttons to their event handler
-//        buy.setOnAction(this::buyAction);
-//        sell.setOnAction(this::buyAction);
-//        exit.setOnAction(this::exitAction);
-        
+
         // Set the column widths as a percentage
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(30.0);
         ColumnConstraints col2 = new ColumnConstraints();
         col2.setPercentWidth(70.0);
+
         converterGrid.getColumnConstraints().addAll(col1, col2);
 
         // Add space around the outside of the GridPane
-        converterGrid.setPadding(new Insets(0, 40, 0, 40));
-        
+        converterGrid.setPadding(new Insets(20.0));
         // Add space between rows and columns of the GridPane
         converterGrid.setHgap(10.0);
         converterGrid.setVgap(10.0);
-        
+
+        // Load the GridPane into the pane
+        converterPane.setCenter(converterGrid);
+
         return converterPane;
     }
-        
-  
+
     /**
-     * Display an Alert box if there is a NumberFormatException detected in the
-     * calculateButtonHandler
+     * This is the event handler when the button is being pressed. If there is a
+     * NumberFormatException when any of the fields is converted to a BigDecimal
+     * then an Alert box is displayed
      *
-     * @param badValue
-     * @param textField
+     * There is a better way to handle strings that cannot convert and you will
+     * learn how in the Java Desktop course.
+     *
+     * @param e
      */
-//    private void numberFormatAlert(String badValue, String textField) {
-//        Alert alert = new Alert(Alert.AlertType.ERROR);
-//        alert.setTitle("Number Format Error");
-//        alert.setHeaderText("The value \"" + badValue + "\" cannot be converted to a number for the " + textField);
-//        alert.setContentText("Number Format Error");
-//
-//        alert.showAndWait();
-//    }
-        
-//   private void calculateButtonHandler(ActionEvent e) {
+//    private void calculateButtonHandler(ActionEvent e) {
 //        boolean doCalculation = true;
 //        try {
-//            record.setInputValue(new BigDecimal(amountValue.getText()));
+//            finance.setInputValue(new BigDecimal(currencyCode.getText()));
 //        } catch (NumberFormatException nfe) {
 //            doCalculation = false;
-//            numberFormatAlert(amountValue.getText(), "Loan");
+//            numberFormatAlert(currencyCode.getText(), "Loan");
 //        }
 //        try {
-//            record.setRate(new BigDecimal(rateValue.getText()));
+//            finance.setRate(new BigDecimal(valueLabel.getText()));
 //        } catch (NumberFormatException nfe) {
 //            doCalculation = false;
-//            numberFormatAlert(rateValue.getText(), "Rate");
+//            numberFormatAlert(valueLabel.getText(), "Rate");
 //        }
 //        try {
-//            record.setTerm(new BigDecimal(termValue.getText()));
+//            finance.setTerm(new BigDecimal(termValue.getText()));
 //        } catch (NumberFormatException nfe) {
 //            doCalculation = false;
 //            numberFormatAlert(termValue.getText(), "Term");
@@ -215,29 +209,45 @@ public class CurrencyConverterFX {
 //        if (doCalculation == true) {
 //            switch (calculationType) {
 //                case 0:
-//                    money.buyCalculation(record);
+//                    calc.loanCalculation(finance);
 //                    break;
 //                case 1:
-//                    money.sellValueCalculation(record);
+//                    calc.futureValueCalculation(finance);
 //                    break;
-//                }
-//            result.setText(record.getResult().toString());
+//                case 2:
+//                    calc.savingsGoalCalculation(finance);
+//                    break;
+//            }
+//            resultValue.setText(finance.getResult().toString());
 //        }
 //    }
 
+    /**
+     * Display an Alert box if there is a NumberFormatException detected in the
+     * calculateButtonHandler
+     *
+     * @param badValue
+     * @param textField
+     */
+    private void numberFormatAlert(String badValue, String textField) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Number Format Error");
+        alert.setHeaderText("The value \"" + badValue + "\" cannot be converted to a number for the " + textField);
+        alert.setContentText("Number Format Error");
+
+        alert.showAndWait();
+    }
 
     public void start(Stage primaryStage) {
 
         BorderPane root = new BorderPane();
-        root.setCenter(buildPage());
-        
+        root.setCenter(buildForm());
+
         Scene scene = new Scene(root, 600, 450);
 
         primaryStage.setTitle("Currency Converter");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-    
 }
-
 
