@@ -3,11 +3,10 @@ package com.juliemartin.currencyconverter.presentation;
 import com.juliemartin.currencyconverter.calc.Calculations;
 import com.juliemartin.currencyconverter.data.CurrencyDB;
 import com.juliemartin.currencyconverter.data.CurrencyDBImpl;
+import com.juliemartin.currencyconverter.data.CurrencyData;
 import com.juliemartin.currencyconverter.data.MoneyBean;
 import com.juliemartin.currencyconverter.data.RecordBean;
-import java.math.BigDecimal;
 import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -16,10 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -34,7 +30,6 @@ public class CurrencyConverterFX {
     
     private final MoneyBean money;
     private final RecordBean record;
-    private final Calculations calc;
     private final CurrencyDB currencyDB;
 
     private TextField currencyCodeField;
@@ -49,6 +44,9 @@ public class CurrencyConverterFX {
      * Default constructor
      */
     public CurrencyConverterFX() {
+        
+        money = new MoneyBean();
+        record = new RecordBean();
         currencyDB = new CurrencyDBImpl(); // instantiate the db dao object
     }
     
@@ -60,7 +58,7 @@ public class CurrencyConverterFX {
 //        calculationType = 0; // Buy
 //        calculationType = 1; // Sell
 //    }
-  
+//  
  /**
      * This method creates a Label that is centered inside an HBox.
      *
@@ -208,23 +206,42 @@ public class CurrencyConverterFX {
      *
      * @param e
      */
-//    private void findButtonHandler(ActionEvent e) {
-//        boolean doFind = true;
-//        String currencyCodeField = "-1";
-//        try {
-//            currencyCodeField = String.parseString(currencyCodeField.getText());
-//        } catch (NumberFormatException nfe) {
-//            doFind = false;
-//            numberFormatAlert(currencyCodeField.getText(), "CurrencyCode");
-//        }
-//
-//        if (doFind == true) {
-//            String primaryKey = CurrencyDB.getIdQueryRecord(primaryKey).toString();
-//            valueField.setText(primaryKey);
-//        }
-//
-//    }
+    private void findButtonHandler(ActionEvent e) {
+        boolean doFind = true;
+        String currencyCodeValue = "";
+        try {
+            currencyCodeValue = currencyCodeField.getText();
+            money.setCurrencyCode(currencyCodeValue);
+        } catch (NumberFormatException nfe) {
+            doFind = false;
+            numberFormatAlert(currencyCodeField.getText(), "CurrencyCode");
+        }
 
+        if (doFind == true) {
+            String theCurrency = CurrencyDB.getIdQueryRecord(currencyCodeValue).toString;
+            
+            valueField.setText(theCurrency);
+     
+        }
+
+    }
+
+        /**
+     * Display an Alert box if there is a NumberFormatException detected in the
+     * saveButtonHandler of findButtonHandler
+     *
+     * @param badValue
+     * @param textField
+     */
+    private void numberFormatAlert(String badValue, String textField) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Number Format Error");
+        alert.setHeaderText("The value \"" + badValue + "\" cannot be converted to a number for the " + textField);
+        alert.setContentText("Number Format Error");
+
+        alert.showAndWait();
+    }
+    
 
 
     public void start(Stage primaryStage) {

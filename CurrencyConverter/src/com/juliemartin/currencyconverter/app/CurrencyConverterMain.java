@@ -20,10 +20,7 @@ public class CurrencyConverterMain extends Application {
 
     @Override
     public void init() {
-        calc = new Calculations();
-        money = new MoneyBean();
-        record = new RecordBean();
-        gui = new CurrencyConverterFX(money, record, calc);
+        gui = new CurrencyConverterFX();
     }
 
     @Override

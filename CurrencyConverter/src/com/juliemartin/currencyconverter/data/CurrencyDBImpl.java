@@ -3,7 +3,7 @@ package com.juliemartin.currencyconverter.data;
 import com.juliemartin.currencyconverter.data.CurrencyData;
 import java.sql.*;
 
-class CurrencyDBImpl implements CurrencyDB {
+public class CurrencyDBImpl implements CurrencyDB {
 
     // Database connection information
     String url = "jdbc:derby://localhost:1527/MONEYRECORDS";
