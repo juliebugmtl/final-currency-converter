@@ -3,6 +3,11 @@ package com.juliemartin.currencyconverter.data;
 import com.juliemartin.currencyconverter.data.CurrencyData;
 import java.sql.*;
 
+/**
+ *
+ * @author Julie Martin
+ */
+
 public class CurrencyDBImpl implements CurrencyDB {
 
     // Database connection information

@@ -144,16 +144,16 @@ public class CurrencyConverterFX {
             amountValue = Double.parseDouble(currencyAmountField.getText());
             record.setCurrencyCode(currencyCodeValue);
             money.setAmount(amountValue);
+            String primaryKey = currencyCodeValue;
             
+            RecordBean theData = CurrencyDBImpl.getIdQueryRecord(primaryKey);
             
-            //CurrencyDBImpl theData = new CurrencyDBImpl();
-            String theData = CurrencyDBImpl.getIdQueryRecord(String primaryKey);   
             
 
             
-            double temp1 = money.getValue;
-            String temp2 = String.valueOf(temp1);
-            valueField.setText(temp2);
+            //double temp1 = money.getValue;
+            //String temp2 = String.valueOf(temp1);
+            //valueField.setText(temp2);
         }
     });
 
@@ -212,41 +212,7 @@ public class CurrencyConverterFX {
     }
 
 
-    /**
-     * This is the event handler when the button is being pressed. If there is a
-     * NumberFormatException when the Id field is converted to an int then an
-     * Alert box is displayed
-     *
-     * There is a better way to handle strings that cannot convert and you will
-     * learn how in the Java Desktop course.
-     *
-     * @param e
-     */
-//    private void findButtonHandler(ActionEvent e) {
-//        boolean doFind = true;
-//        String currencyCodeValue = "";
-//        double amountValue = 0;
-//        double valueValue = 0;
-//        try {
-//            currencyCodeValue = currencyCodeField.getText();
-//            amountValue = Double.parseDouble(currencyAmountField.getText());
-//            money.setCurrencyCode(currencyCodeValue);
-//            money.setAmount(amountValue);
-//        } catch (NumberFormatException nfe) {
-//            doFind = false;
-//            numberFormatAlert(currencyCodeField.getText(), "CurrencyCode");
-//        }
-//
-//        if (doFind == true) {
-//          //  String theCurrency = CurrencyDB.getIdQueryRecord(currencyCodeValue).toString;
-//            
-//          //  valueField.setText(theCurrency);
-//     
-//        }
-//
-//    }
-
-        /**
+   /**
      * Display an Alert box if there is a NumberFormatException detected in the
      * saveButtonHandler of findButtonHandler
      *
@@ -261,8 +227,6 @@ public class CurrencyConverterFX {
 
         alert.showAndWait();
     }
-    
-
 
     public void start(Stage primaryStage) {
 
