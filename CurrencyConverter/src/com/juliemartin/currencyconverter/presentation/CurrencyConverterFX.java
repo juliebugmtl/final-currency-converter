@@ -146,8 +146,8 @@ public class CurrencyConverterFX {
             money.setAmount(amountValue);
             
             
-            CurrencyDBImpl theData = new CurrencyDBImpl();
-            String theData = CurrencyDBImpl.getIdQueryRecord();
+            //CurrencyDBImpl theData = new CurrencyDBImpl();
+            String theData = CurrencyDBImpl.getIdQueryRecord(String primaryKey);   
             
 
             
