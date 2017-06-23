@@ -209,18 +209,22 @@ public class CurrencyConverterFX {
     private void findButtonHandler(ActionEvent e) {
         boolean doFind = true;
         String currencyCodeValue = "";
+        double amountValue = 0;
+        double valueValue = 0;
         try {
             currencyCodeValue = currencyCodeField.getText();
+            amountValue = Double.parseDouble(currencyAmountField.getText());
             money.setCurrencyCode(currencyCodeValue);
+            money.setAmount(amountValue);
         } catch (NumberFormatException nfe) {
             doFind = false;
             numberFormatAlert(currencyCodeField.getText(), "CurrencyCode");
         }
 
         if (doFind == true) {
-            String theCurrency = CurrencyDB.getIdQueryRecord(currencyCodeValue).toString;
+          //  String theCurrency = CurrencyDB.getIdQueryRecord(currencyCodeValue).toString;
             
-            valueField.setText(theCurrency);
+          //  valueField.setText(theCurrency);
      
         }
 

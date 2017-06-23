@@ -23,7 +23,7 @@ public class CurrencyDBImpl implements CurrencyDB {
     @Override
     public CurrencyData getIdQueryRecord(String primaryKey) {
 
-        String sql = "Select * from FISH where ID = ?";
+        String sql = "Select * from MONEY where CURRENCYCODE = ?";
         CurrencyData currencyData = new CurrencyData();
         try (
                 Connection connection = DriverManager.getConnection(url, user, password);
