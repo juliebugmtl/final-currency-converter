@@ -23,7 +23,7 @@ public class CurrencyConverterMain extends Application {
         calc = new Calculations();
         money = new MoneyBean();
         record = new RecordBean();
-        gui = new CurrencyConverterFX(money, record);
+        gui = new CurrencyConverterFX(money, record, calc);
     }
 
     @Override
