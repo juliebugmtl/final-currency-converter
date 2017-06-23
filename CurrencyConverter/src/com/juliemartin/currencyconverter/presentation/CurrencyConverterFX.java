@@ -30,15 +30,12 @@ public class CurrencyConverterFX {
     
     private final MoneyBean money;
     private final RecordBean record;
-    private final CurrencyDB currencyDB;
+    private final CurrencyDB theData;
 
     private TextField currencyCodeField;
     private TextField currencyAmountField;
     private TextField valueField;
-    private Label amountLabel;
     private Label title;
-
-    private int calculationType;
 
     /**
      * Default constructor
@@ -47,9 +44,9 @@ public class CurrencyConverterFX {
         
         money = new MoneyBean();
         record = new RecordBean();
-        currencyDB = new CurrencyDBImpl(); // instantiate the db dao object
+        theData = new CurrencyDBImpl();
+        
     }
-    
     
 //    public CurrencyConverterFX(MoneyBean money, RecordBean record, Calculations calc) {
 //        this.calc = calc;
@@ -136,15 +133,34 @@ public class CurrencyConverterFX {
         valueField.setEditable(false);
         converterGrid.add(valueField, 1, 2);
         
-        // Convert Button
+        // Buy Button
         Button buy = new Button("Buy");
         buy.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family:Verdana, sans-serif");
-        buy.setOnAction(this::findButtonHandler);
+        buy.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+            String currencyCodeValue = "";
+            double amountValue = 0;
+            currencyCodeValue = currencyCodeField.getText();
+            amountValue = Double.parseDouble(currencyAmountField.getText());
+            record.setCurrencyCode(currencyCodeValue);
+            money.setAmount(amountValue);
+            
+            
+            CurrencyDBImpl theData = new CurrencyDBImpl();
+            String theData = CurrencyDBImpl.getIdQueryRecord();
+            
+
+            
+            double temp1 = money.getValue;
+            String temp2 = String.valueOf(temp1);
+            valueField.setText(temp2);
+        }
+    });
 
         // Sell Button
         Button sell = new Button("Sell");
         sell.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family:Verdana, sans-serif");
-        sell.setOnAction(this::findButtonHandler);
+        //sell.setOnAction(this::findButtonHandler);
 
         // Exit button
         Button exit = new Button("Exit");
@@ -206,29 +222,29 @@ public class CurrencyConverterFX {
      *
      * @param e
      */
-    private void findButtonHandler(ActionEvent e) {
-        boolean doFind = true;
-        String currencyCodeValue = "";
-        double amountValue = 0;
-        double valueValue = 0;
-        try {
-            currencyCodeValue = currencyCodeField.getText();
-            amountValue = Double.parseDouble(currencyAmountField.getText());
-            money.setCurrencyCode(currencyCodeValue);
-            money.setAmount(amountValue);
-        } catch (NumberFormatException nfe) {
-            doFind = false;
-            numberFormatAlert(currencyCodeField.getText(), "CurrencyCode");
-        }
-
-        if (doFind == true) {
-          //  String theCurrency = CurrencyDB.getIdQueryRecord(currencyCodeValue).toString;
-            
-          //  valueField.setText(theCurrency);
-     
-        }
-
-    }
+//    private void findButtonHandler(ActionEvent e) {
+//        boolean doFind = true;
+//        String currencyCodeValue = "";
+//        double amountValue = 0;
+//        double valueValue = 0;
+//        try {
+//            currencyCodeValue = currencyCodeField.getText();
+//            amountValue = Double.parseDouble(currencyAmountField.getText());
+//            money.setCurrencyCode(currencyCodeValue);
+//            money.setAmount(amountValue);
+//        } catch (NumberFormatException nfe) {
+//            doFind = false;
+//            numberFormatAlert(currencyCodeField.getText(), "CurrencyCode");
+//        }
+//
+//        if (doFind == true) {
+//          //  String theCurrency = CurrencyDB.getIdQueryRecord(currencyCodeValue).toString;
+//            
+//          //  valueField.setText(theCurrency);
+//     
+//        }
+//
+//    }
 
         /**
      * Display an Alert box if there is a NumberFormatException detected in the
