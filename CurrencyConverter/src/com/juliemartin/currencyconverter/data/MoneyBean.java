@@ -6,24 +6,24 @@ package com.juliemartin.currencyconverter.data;
  */
 public class MoneyBean {
 
-    private String currency;
+    private String currencyCode;
     private double amount;
     private double value;
     
     // Constructor
     
     public MoneyBean() {
-
+        
     }
 
     // Getters and Setters
 
-    public String getCurrency() {
-        return currency;
+    public String getCurrencyCode() {
+        return currencyCode;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
     }
 
     public double getAmount() {

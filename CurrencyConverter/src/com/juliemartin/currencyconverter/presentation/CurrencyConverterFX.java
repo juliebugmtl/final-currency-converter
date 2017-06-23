@@ -1,11 +1,12 @@
 package com.juliemartin.currencyconverter.presentation;
 
 import com.juliemartin.currencyconverter.calc.Calculations;
+import com.juliemartin.currencyconverter.data.CurrencyDB;
+import com.juliemartin.currencyconverter.data.CurrencyDBImpl;
+import com.juliemartin.currencyconverter.data.CurrencyData;
 import com.juliemartin.currencyconverter.data.MoneyBean;
 import com.juliemartin.currencyconverter.data.RecordBean;
-import java.math.BigDecimal;
 import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -14,10 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -32,24 +30,32 @@ public class CurrencyConverterFX {
     
     private final MoneyBean money;
     private final RecordBean record;
-    private final Calculations calc;
+    private final CurrencyDB theData;
 
-    private TextField currencyCode;
-    private TextField currencyAmount;
-    private TextField value;
-    private Label amountLabel;
+    private TextField currencyCodeField;
+    private TextField currencyAmountField;
+    private TextField valueField;
     private Label title;
 
-    private int calculationType;
-
-    public CurrencyConverterFX(MoneyBean money, RecordBean record, Calculations calc) {
-        this.calc = calc;
-        this.money = money;
-        this.record = record;
-        calculationType = 0; // Buy
-        calculationType = 1; // Sell
+    /**
+     * Default constructor
+     */
+    public CurrencyConverterFX() {
+        
+        money = new MoneyBean();
+        record = new RecordBean();
+        theData = new CurrencyDBImpl();
+        
     }
-  
+    
+//    public CurrencyConverterFX(MoneyBean money, RecordBean record, Calculations calc) {
+//        this.calc = calc;
+//        this.money = money;
+//        this.record = record;
+//        calculationType = 0; // Buy
+//        calculationType = 1; // Sell
+//    }
+//  
  /**
      * This method creates a Label that is centered inside an HBox.
      *
@@ -96,11 +102,11 @@ public class CurrencyConverterFX {
         converterGrid.add(currencyCodeLabel, 0, 0);
 
         // Column 1, Row 0 Empty field for currency code
-        currencyCode = new TextField();
-        currencyCode.setMaxWidth(75);
-        currencyCode.setStyle("-fx-font-size:14pt; -fx-font-weight:normal; -fx-font-family:Verdana, sans-serif");
-        currencyCode.setAlignment(Pos.CENTER_LEFT);
-        converterGrid.add(currencyCode, 1, 0);
+        currencyCodeField = new TextField();
+        currencyCodeField.setMaxWidth(75);
+        currencyCodeField.setStyle("-fx-font-size:14pt; -fx-font-weight:normal; -fx-font-family:Verdana, sans-serif");
+        currencyCodeField.setAlignment(Pos.CENTER_LEFT);
+        converterGrid.add(currencyCodeField, 1, 0);
 
         // Column 0, Row 1 Amount
         Label amountLabel = new Label("Amount");
@@ -109,10 +115,10 @@ public class CurrencyConverterFX {
         converterGrid.add(amountLabel, 0, 1);
 
         // Column 1, Row 1 Empty field for amount
-        currencyAmount = new TextField();
-        currencyAmount.setStyle("-fx-font-size:14pt; -fx-font-weight:normal; -fx-font-family:Verdana, sans-serif");
-        currencyAmount.setAlignment(Pos.CENTER_LEFT);
-        converterGrid.add(currencyAmount, 1, 1);
+        currencyAmountField = new TextField();
+        currencyAmountField.setStyle("-fx-font-size:14pt; -fx-font-weight:normal; -fx-font-family:Verdana, sans-serif");
+        currencyAmountField.setAlignment(Pos.CENTER_LEFT);
+        converterGrid.add(currencyAmountField, 1, 1);
 
         // Column 0, Row 2 Value
         Label valueLabel = new Label("Value");
@@ -121,19 +127,40 @@ public class CurrencyConverterFX {
         converterGrid.add(valueLabel, 0, 2);
 
         // Column 1, Row 2 Empty field for value and set not editable
-        value = new TextField();
-        value.setStyle("-fx-font-size:14pt; -fx-font-weight:normal; -fx-font-family:Verdana, sans-serif");
-        value.setAlignment(Pos.CENTER_LEFT);
-        value.setEditable(false);
-        converterGrid.add(value, 1, 2);
+        valueField = new TextField();
+        valueField.setStyle("-fx-font-size:14pt; -fx-font-weight:normal; -fx-font-family:Verdana, sans-serif");
+        valueField.setAlignment(Pos.CENTER_LEFT);
+        valueField.setEditable(false);
+        converterGrid.add(valueField, 1, 2);
         
-        // Convert Button
+        // Buy Button
         Button buy = new Button("Buy");
         buy.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family:Verdana, sans-serif");
+        buy.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+            String currencyCodeValue = "";
+            double amountValue = 0;
+            currencyCodeValue = currencyCodeField.getText();
+            amountValue = Double.parseDouble(currencyAmountField.getText());
+            record.setCurrencyCode(currencyCodeValue);
+            money.setAmount(amountValue);
+            
+            
+            //CurrencyDBImpl theData = new CurrencyDBImpl();
+            String theData = CurrencyDBImpl.getIdQueryRecord(String primaryKey);   
+            
+
+            
+            double temp1 = money.getValue;
+            String temp2 = String.valueOf(temp1);
+            valueField.setText(temp2);
+        }
+    });
 
         // Sell Button
         Button sell = new Button("Sell");
         sell.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family:Verdana, sans-serif");
+        //sell.setOnAction(this::findButtonHandler);
 
         // Exit button
         Button exit = new Button("Exit");
@@ -185,8 +212,56 @@ public class CurrencyConverterFX {
     }
 
 
+    /**
+     * This is the event handler when the button is being pressed. If there is a
+     * NumberFormatException when the Id field is converted to an int then an
+     * Alert box is displayed
+     *
+     * There is a better way to handle strings that cannot convert and you will
+     * learn how in the Java Desktop course.
+     *
+     * @param e
+     */
+//    private void findButtonHandler(ActionEvent e) {
+//        boolean doFind = true;
+//        String currencyCodeValue = "";
+//        double amountValue = 0;
+//        double valueValue = 0;
+//        try {
+//            currencyCodeValue = currencyCodeField.getText();
+//            amountValue = Double.parseDouble(currencyAmountField.getText());
+//            money.setCurrencyCode(currencyCodeValue);
+//            money.setAmount(amountValue);
+//        } catch (NumberFormatException nfe) {
+//            doFind = false;
+//            numberFormatAlert(currencyCodeField.getText(), "CurrencyCode");
+//        }
+//
+//        if (doFind == true) {
+//          //  String theCurrency = CurrencyDB.getIdQueryRecord(currencyCodeValue).toString;
+//            
+//          //  valueField.setText(theCurrency);
+//     
+//        }
+//
+//    }
 
+        /**
+     * Display an Alert box if there is a NumberFormatException detected in the
+     * saveButtonHandler of findButtonHandler
+     *
+     * @param badValue
+     * @param textField
+     */
+    private void numberFormatAlert(String badValue, String textField) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Number Format Error");
+        alert.setHeaderText("The value \"" + badValue + "\" cannot be converted to a number for the " + textField);
+        alert.setContentText("Number Format Error");
 
+        alert.showAndWait();
+    }
+    
 
 
     public void start(Stage primaryStage) {
