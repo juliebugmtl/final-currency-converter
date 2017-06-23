@@ -144,6 +144,7 @@ public class CurrencyConverterFX {
             amountValue = Double.parseDouble(currencyAmountField.getText());
             record.setCurrencyCode(currencyCodeValue);
             money.setAmount(amountValue);
+            String primaryKey = currencyCodeValue;
             
             RecordBean theData = CurrencyDBImpl.getIdQueryRecord(primaryKey);
             
