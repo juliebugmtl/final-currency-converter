@@ -1,5 +1,10 @@
 package com.juliemartin.currencyconverter.data;
 
+/**
+ *
+ * @author Julie Martin
+ */
+
 public class CurrencyData {
 
     private String currencyCode;
