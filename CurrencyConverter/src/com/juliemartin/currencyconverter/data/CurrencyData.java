@@ -1,62 +1,56 @@
 package com.juliemartin.currencyconverter.data;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+public class CurrencyData {
 
-/**
- *
- * @author Julie Martin
- */
-class CurrencyData {
-
- private String CURRENCYCODE;
-    private double SELLPERCAD;
-    private double BUYPERCAD;
+    private String currencyCode;
+    private double sellPerCAD;
+    private double buyPerCAD;
     
-    public CurrencyData(String CURRENCYCODE, double SELLPERCAD, double BUYPERCAD) {
+    public CurrencyData(String currencyCode, double sellPerCAD, double buyPerCAD) {
         super();
-        this.CURRENCYCODE = CURRENCYCODE;
-        this.SELLPERCAD = SELLPERCAD;
-        this.BUYPERCAD = BUYPERCAD;
+        this.currencyCode = currencyCode;
+        this.sellPerCAD = sellPerCAD;
+        this.buyPerCAD = buyPerCAD;
     }
 
+    public CurrencyData() {
+        super();
+        this.currencyCode = "";
+        this.sellPerCAD = -1;
+        this.buyPerCAD = -1;
+
+    }
 
     public String getCurrencyCode() {
-        return CURRENCYCODE;
+        return currencyCode;
     }
 
-    public void setCurrencyCode(String CURRENCYCODE) {
-        this.CURRENCYCODE = CURRENCYCODE;
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
     }
 
-    public double SELLPERCAD() {
-        return SELLPERCAD;
+    public double getSellPerCAD() {
+        return sellPerCAD;
     }
 
-    public void setSellPerCAD(double SELLPERCAD) {
-        this.SELLPERCAD = SELLPERCAD;
+    public void setSellPerCAD(double sellPerCAD) {
+        this.sellPerCAD = sellPerCAD;
     }
 
-    public double BUYPERCAD() {
-        return BUYPERCAD;
+    public double getBuyPerCAD() {
+        return buyPerCAD;
     }
 
-    public void setBuyPerCAD(double BUYPERCAD) {
-        this.BUYPERCAD = BUYPERCAD;
+    public void setBuyPerCAD(double buyPerCAD) {
+        this.buyPerCAD = buyPerCAD;
     }
-
-    
 
     @Override
     public String toString() {
         String s =
-        "Currency Code = " + CURRENCYCODE + "\n" +
-        "Sell per CAD = " + SELLPERCAD + "\n" +
-        "Buy per CAD = " + BUYPERCAD + "\n";
+        "Currency Code = " + currencyCode + "\n" +
+        "Sell per CAD = " + sellPerCAD + "\n" +
+        "Buy per CAD = " + buyPerCAD + "\n";
 
         return s;
     }
