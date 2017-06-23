@@ -12,8 +12,8 @@ public class RecordBean {
     
     // Constructor
     
-    public RecordBean() {
-
+    public RecordBean(){
+        
     }
 
     // Getters and Setters
