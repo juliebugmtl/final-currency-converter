@@ -48,14 +48,6 @@ public class CurrencyConverterFX {
         
     }
     
-//    public CurrencyConverterFX(MoneyBean money, RecordBean record, Calculations calc) {
-//        this.calc = calc;
-//        this.money = money;
-//        this.record = record;
-//        calculationType = 0; // Buy
-//        calculationType = 1; // Sell
-//    }
-//  
  /**
      * This method creates a Label that is centered inside an HBox.
      *
@@ -65,12 +57,10 @@ public class CurrencyConverterFX {
     private HBox createTitle() {
         title = new Label("Currency Converter"); // default
 
-        // Style the label using CSS
-        // Possible fonts can be found at http://www.webdesigndev.com/16-gorgeous-web-safe-fonts-to-use-with-css/
+        // Styling
         title.setStyle("-fx-font-size:18pt; -fx-font-weight:bold; -fx-font-family:Verdana, sans-serif");
 
-        // To center the title and give it padding create an HBox, set the
-        // padding and alignment, add the label and then add the HBox to the BorderPane.
+        // HBox
         HBox hbox = new HBox();
         hbox.getChildren().add(title);
         hbox.setAlignment(Pos.CENTER);
@@ -138,29 +128,66 @@ public class CurrencyConverterFX {
         buy.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family:Verdana, sans-serif");
         buy.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-            String currencyCodeValue = "";
+          
+            // Create variables
+            String currencyCodeValue = null;
             double amountValue = 0;
+        
+            // Get some data to pass along
             currencyCodeValue = currencyCodeField.getText();
             amountValue = Double.parseDouble(currencyAmountField.getText());
+        
+            // Set some amounts in the beans that will come in handy
             record.setCurrencyCode(currencyCodeValue);
             money.setAmount(amountValue);
+        
+            // Set primaryKey variable so we can look up the data
             String primaryKey = currencyCodeValue;
             
+            // Try to fetch data
             RecordBean theData = CurrencyDBImpl.getIdQueryRecord(primaryKey);
             
+            // Call Buy Calculations
+            Calculations.buyPerCAD();
             
-
-            
-            //double temp1 = money.getValue;
-            //String temp2 = String.valueOf(temp1);
-            //valueField.setText(temp2);
-        }
-    });
-
+            // Get Value from the MoneyBean and set it as the valueField to display it to the user
+            double temp1 = money.getValue;
+            String temp2 = String.valueOf(temp1);
+            valueField.setText(temp2);
+        }});
+       
         // Sell Button
         Button sell = new Button("Sell");
         sell.setStyle("-fx-font-size:14pt; -fx-font-weight:bold; -fx-font-family:Verdana, sans-serif");
-        //sell.setOnAction(this::findButtonHandler);
+         sell.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+          
+            // Create variables
+            String currencyCodeValue = null;
+            double amountValue = 0;
+        
+            // Get some data to pass along
+            currencyCodeValue = currencyCodeField.getText();
+            amountValue = Double.parseDouble(currencyAmountField.getText());
+        
+            // Set some amounts in the beans that will come in handy
+            record.setCurrencyCode(currencyCodeValue);
+            money.setAmount(amountValue);
+        
+            // Set primaryKey variable so we can look up the data
+            String primaryKey = currencyCodeValue;
+            
+            // Try to fetch data
+            RecordBean theData = CurrencyDBImpl.getIdQueryRecord(primaryKey);
+            
+            // Call Sell Calculations
+            Calculations.sellPerCAD();
+            
+            // Get Value from the MoneyBean and set it as the valueField to display it to the user
+            double temp1 = money.getValue;
+            String temp2 = String.valueOf(temp1);
+            valueField.setText(temp2);
+        }});
 
         // Exit button
         Button exit = new Button("Exit");
@@ -168,12 +195,10 @@ public class CurrencyConverterFX {
         exit.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 Platform.exit();
-            }
-        }
-        );
+            }});
 
         
-        // HBox that will span 2 columns so that buttons can be centered 
+        // HBox
         HBox hboxBtn = new HBox();
 
         // Add the buttons to the HBox
@@ -209,23 +234,6 @@ public class CurrencyConverterFX {
         converterPane.setCenter(converterGrid);
 
         return converterPane;
-    }
-
-
-   /**
-     * Display an Alert box if there is a NumberFormatException detected in the
-     * saveButtonHandler of findButtonHandler
-     *
-     * @param badValue
-     * @param textField
-     */
-    private void numberFormatAlert(String badValue, String textField) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Number Format Error");
-        alert.setHeaderText("The value \"" + badValue + "\" cannot be converted to a number for the " + textField);
-        alert.setContentText("Number Format Error");
-
-        alert.showAndWait();
     }
 
     public void start(Stage primaryStage) {
