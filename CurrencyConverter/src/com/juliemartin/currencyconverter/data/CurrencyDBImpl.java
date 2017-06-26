@@ -46,5 +46,6 @@ public class CurrencyDBImpl implements CurrencyDB {
             System.exit(1);
         }
         return record;
+        
     }
 }
