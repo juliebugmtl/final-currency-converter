@@ -56,7 +56,7 @@ public class CurrencyData {
         "Currency Code = " + currencyCode + "\n" +
         "Sell per CAD = " + sellPerCAD + "\n" +
         "Buy per CAD = " + buyPerCAD + "\n";
-
+       
         return s;
     }
 }

@@ -29,7 +29,7 @@ import javafx.stage.Stage;
 public class CurrencyConverterFX {
     
     private final MoneyBean money;
-    private final RecordBean record;
+    private final CurrencyData currencyData;
     private final CurrencyDB theData;
 
     private TextField currencyCodeField;
@@ -43,7 +43,7 @@ public class CurrencyConverterFX {
     public CurrencyConverterFX() {
         
         money = new MoneyBean();
-        record = new RecordBean();
+        currencyData = new CurrencyData();
         theData = new CurrencyDBImpl();
         
     }
@@ -138,7 +138,7 @@ public class CurrencyConverterFX {
             amountValue = Double.parseDouble(currencyAmountField.getText());
         
             // Set some amounts in the beans that will come in handy
-            record.setCurrencyCode(currencyCodeValue);
+            currencyData.setCurrencyCode(currencyCodeValue);
             money.setAmount(amountValue);
         
             // Set primaryKey variable so we can look up the data
@@ -150,14 +150,14 @@ public class CurrencyConverterFX {
             // Create new object for Calculations, call Buy Calculations
             
             Calculations calc = new Calculations(); 
-            calc.buyPerCAD(money, record);
+            calc.buyPerCAD(money, currencyData);
             
-            System.out.println(record.getBuyPerCAD());
+            System.out.println("Buy Per CAD output: " + currencyData.getBuyPerCAD());
             
             // Get Value from the MoneyBean and set it as the valueField to display it to the user
-            //double temp1 = money.getValue;
-            //String temp2 = String.valueOf(temp1);
-            //valueField.setText(temp2);
+//            double temp1 = money.getValue;
+//            String temp2 = String.valueOf(temp1);
+//            valueField.setText(temp2);
         }});
        
         // Sell Button
@@ -175,7 +175,7 @@ public class CurrencyConverterFX {
             amountValue = Double.parseDouble(currencyAmountField.getText());
         
             // Set some amounts in the beans that will come in handy
-            record.setCurrencyCode(currencyCodeValue);
+            currencyData.setCurrencyCode(currencyCodeValue);
             money.setAmount(amountValue);
         
             // Set primaryKey variable so we can look up the data
