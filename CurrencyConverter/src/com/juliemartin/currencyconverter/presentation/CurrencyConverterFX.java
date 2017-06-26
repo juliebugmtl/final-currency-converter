@@ -145,15 +145,19 @@ public class CurrencyConverterFX {
             String primaryKey = currencyCodeValue;
             
             // Try to fetch data
-            RecordBean theData = CurrencyDBImpl.getIdQueryRecord(primaryKey);
+            CurrencyData theBean = theData.getIdQueryRecord(primaryKey);
             
-            // Call Buy Calculations
-            Calculations.buyPerCAD();
+            // Create new object for Calculations, call Buy Calculations
+            
+            Calculations calc = new Calculations(); 
+            calc.buyPerCAD(money, record);
+            
+            System.out.println(record.getBuyPerCAD());
             
             // Get Value from the MoneyBean and set it as the valueField to display it to the user
-            double temp1 = money.getValue;
-            String temp2 = String.valueOf(temp1);
-            valueField.setText(temp2);
+            //double temp1 = money.getValue;
+            //String temp2 = String.valueOf(temp1);
+            //valueField.setText(temp2);
         }});
        
         // Sell Button
@@ -178,15 +182,15 @@ public class CurrencyConverterFX {
             String primaryKey = currencyCodeValue;
             
             // Try to fetch data
-            RecordBean theData = CurrencyDBImpl.getIdQueryRecord(primaryKey);
+            CurrencyData theBean = theData.getIdQueryRecord(primaryKey);
             
             // Call Sell Calculations
-            Calculations.sellPerCAD();
+            //Calculations.sellPerCAD();
             
             // Get Value from the MoneyBean and set it as the valueField to display it to the user
-            double temp1 = money.getValue;
-            String temp2 = String.valueOf(temp1);
-            valueField.setText(temp2);
+            //double temp1 = money.getValue;
+            //String temp2 = String.valueOf(temp1);
+            //valueField.setText(temp2);
         }});
 
         // Exit button

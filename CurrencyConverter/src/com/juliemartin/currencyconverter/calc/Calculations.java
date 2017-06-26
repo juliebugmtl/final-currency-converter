@@ -23,8 +23,11 @@ public class Calculations {
         // Value is cost in Canadian dollars
         
         double temp1 = money.getAmount();
+        System.out.println("Money Get Amount: " + money.getAmount());
         double temp2 = record.getBuyPerCAD();
+        System.out.println("Record Get BPC: " + record.getBuyPerCAD());
         double temp3 = temp2*temp1;
+        System.out.println("Temp 3: " + temp3 );
         
         money.setValue(temp3);
     }
