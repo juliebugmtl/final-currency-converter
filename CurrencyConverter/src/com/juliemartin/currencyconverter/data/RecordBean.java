@@ -4,19 +4,27 @@ package com.juliemartin.currencyconverter.data;
  *
  * @author Julie Martin
  */
+
 public class RecordBean {
-    
+
     private String currencyCode;
     private double sellPerCAD;
     private double buyPerCAD;
     
-    // Constructor
-    
-    public RecordBean(){
-        
+    public RecordBean(String currencyCode, double sellPerCAD, double buyPerCAD) {
+        super();
+        this.currencyCode = currencyCode;
+        this.sellPerCAD = sellPerCAD;
+        this.buyPerCAD = buyPerCAD;
     }
 
-    // Getters and Setters
+    public RecordBean() {
+        super();
+        this.currencyCode = "";
+        this.sellPerCAD = -1;
+        this.buyPerCAD = -1;
+
+    }
 
     public String getCurrencyCode() {
         return currencyCode;
@@ -42,4 +50,13 @@ public class RecordBean {
         this.buyPerCAD = buyPerCAD;
     }
 
+    @Override
+    public String toString() {
+        String s =
+        "Currency Code = " + currencyCode + "\n" +
+        "Sell per CAD = " + sellPerCAD + "\n" +
+        "Buy per CAD = " + buyPerCAD + "\n";
+       
+        return s;
+    }
 }

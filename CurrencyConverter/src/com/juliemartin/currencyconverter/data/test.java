@@ -22,16 +22,16 @@ public class test {
     String user = "banker";
     String password = "finance";
  
-        public ArrayList<CurrencyData> getQueryRecords() {
+        public ArrayList<RecordBean> getQueryRecords() {
 
-        ArrayList<CurrencyData> rows = new ArrayList<>();
+        ArrayList<RecordBean> rows = new ArrayList<>();
         String sql = "Select * from MONEY";
         try (
                 Connection connection = DriverManager.getConnection(url, user, password);
                 PreparedStatement pStatement = connection.prepareStatement(sql);
                 ResultSet resultSet = pStatement.executeQuery();) {
             while (resultSet.next()) {
-                rows.add(new CurrencyData(
+                rows.add(new RecordBean(
                         resultSet.getString("CURRENCYCODE"),
                         resultSet.getDouble("BUYPERCAD"),
                         resultSet.getDouble("SELLPERCAD")));

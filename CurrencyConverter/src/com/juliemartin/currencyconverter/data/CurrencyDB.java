@@ -1,6 +1,6 @@
 package com.juliemartin.currencyconverter.data;
 
-import com.juliemartin.currencyconverter.data.CurrencyData;
+import com.juliemartin.currencyconverter.data.RecordBean;
 
 /**
  *
@@ -13,5 +13,5 @@ public interface CurrencyDB {
      * @param primaryKey
      * @return
      */
-    public CurrencyData getIdQueryRecord(String primaryKey);
+    public RecordBean getIdQueryRecord(String primaryKey);
 }

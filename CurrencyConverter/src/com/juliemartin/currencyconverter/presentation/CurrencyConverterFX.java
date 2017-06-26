@@ -3,9 +3,8 @@ package com.juliemartin.currencyconverter.presentation;
 import com.juliemartin.currencyconverter.calc.Calculations;
 import com.juliemartin.currencyconverter.data.CurrencyDB;
 import com.juliemartin.currencyconverter.data.CurrencyDBImpl;
-import com.juliemartin.currencyconverter.data.CurrencyData;
-import com.juliemartin.currencyconverter.data.MoneyBean;
 import com.juliemartin.currencyconverter.data.RecordBean;
+import com.juliemartin.currencyconverter.data.MoneyBean;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -29,7 +28,7 @@ import javafx.stage.Stage;
 public class CurrencyConverterFX {
     
     private final MoneyBean money;
-    private final CurrencyData currencyData;
+    private final RecordBean record;
     private final CurrencyDB theData;
 
     private TextField currencyCodeField;
@@ -43,7 +42,7 @@ public class CurrencyConverterFX {
     public CurrencyConverterFX() {
         
         money = new MoneyBean();
-        currencyData = new CurrencyData();
+        record = new RecordBean();
         theData = new CurrencyDBImpl();
         
     }
@@ -138,21 +137,21 @@ public class CurrencyConverterFX {
             amountValue = Double.parseDouble(currencyAmountField.getText());
         
             // Set some amounts in the beans that will come in handy
-            currencyData.setCurrencyCode(currencyCodeValue);
+            record.setCurrencyCode(currencyCodeValue);
             money.setAmount(amountValue);
         
             // Set primaryKey variable so we can look up the data
             String primaryKey = currencyCodeValue;
             
             // Try to fetch data
-            CurrencyData theBean = theData.getIdQueryRecord(primaryKey);
+            RecordBean theBean = theData.getIdQueryRecord(primaryKey);
             
             // Create new object for Calculations, call Buy Calculations
             
             Calculations calc = new Calculations(); 
-            calc.buyPerCAD(money, currencyData);
+            calc.buyPerCAD(money, record);
             
-            System.out.println("Buy Per CAD output: " + currencyData.getBuyPerCAD());
+            System.out.println("Buy Per CAD output: " + record.getBuyPerCAD());
             
             // Get Value from the MoneyBean and set it as the valueField to display it to the user
 //            double temp1 = money.getValue;
@@ -175,14 +174,14 @@ public class CurrencyConverterFX {
             amountValue = Double.parseDouble(currencyAmountField.getText());
         
             // Set some amounts in the beans that will come in handy
-            currencyData.setCurrencyCode(currencyCodeValue);
+            record.setCurrencyCode(currencyCodeValue);
             money.setAmount(amountValue);
         
             // Set primaryKey variable so we can look up the data
             String primaryKey = currencyCodeValue;
             
             // Try to fetch data
-            CurrencyData theBean = theData.getIdQueryRecord(primaryKey);
+            RecordBean theBean = theData.getIdQueryRecord(primaryKey);
             
             // Call Sell Calculations
             //Calculations.sellPerCAD();
