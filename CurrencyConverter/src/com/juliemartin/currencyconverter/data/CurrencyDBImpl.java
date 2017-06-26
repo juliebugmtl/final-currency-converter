@@ -28,12 +28,11 @@ public class CurrencyDBImpl implements CurrencyDB {
     @Override
     public RecordBean getIdQueryRecord(String primaryKey) {
 
-        String sql = "Select * from MONEY where CURRENCYCODE = ?";
+        String sql = "Select * from MONEY where CURRENCYCODE = '" + primaryKey + "'";
         RecordBean record = new RecordBean();
         try (
                 Connection connection = DriverManager.getConnection(url, user, password);
                 PreparedStatement pStatement = connection.prepareStatement(sql)) {
-            pStatement.setString(1, primaryKey);
             try (ResultSet resultSet = pStatement.executeQuery()) {
                 if (resultSet.next()) {
                     record.setCurrencyCode(resultSet.getString("CURRENCYCODE"));

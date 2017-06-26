@@ -11,18 +11,11 @@ public class RecordBean {
     private double sellPerCAD;
     private double buyPerCAD;
     
-    public RecordBean(String currencyCode, double sellPerCAD, double buyPerCAD) {
+    public RecordBean() {
         super();
         this.currencyCode = currencyCode;
         this.sellPerCAD = sellPerCAD;
         this.buyPerCAD = buyPerCAD;
-    }
-
-    public RecordBean() {
-        super();
-        this.currencyCode = "";
-        this.sellPerCAD = -1;
-        this.buyPerCAD = -1;
 
     }
 
